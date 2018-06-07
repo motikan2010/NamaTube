@@ -11,13 +11,7 @@ class SessionsController < ApplicationController
     redirect_to root_path
   end
 
-  # Github
-  def create_github
-    user = GithubUser.find_or_create_from_auth(request.env['omniauth.auth'])
-    session[:user_id] = user.id
-    redirect_to root_path
-  end
-
+  # GitHub
   def callback
     auth = request.env['omniauth.auth']
 

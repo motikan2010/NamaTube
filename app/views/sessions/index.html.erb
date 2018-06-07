@@ -1,5 +1,6 @@
-<ul class="nav navbar-nav navbar-right">
-  <li><%= link_to 'ログアウト', logout_path %></li>
-  <li><%= link_to 'Twitterでログイン', 'auth/twitter' %></li>
-  <li><%= link_to 'Githubアカウントでログイン', '/auth/github' %></li>
-</ul>
+<form class="form-signin">
+  <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+  <%= link_to 'Githubアカウントでログイン', '/auth/github', class: 'btn btn-lg btn-primary btn-block' %>
+  <%= link_to 'Twitterでログイン', 'auth/twitter', class: 'btn btn-lg btn-primary btn-block' %>
+  <%= link_to 'ログアウト', logout_path, class: 'btn btn-lg btn-warning btn-block' %>
+</form>
