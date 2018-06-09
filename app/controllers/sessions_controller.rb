@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
   def create_twitter
     user = TwitterUser.find_or_create_from_auth(request.env['omniauth.auth'])
     session[:user_id] = user.id
+    session[:auth_type] = 1
     redirect_to root_path
   end
 
@@ -17,6 +18,7 @@ class SessionsController < ApplicationController
 
     user = GithubUser.find_by(provider: auth['provider'], uid: auth['uid']) || GithubUser.create_with_omniauth(auth)
     session[:user_id] = user.id
+    session[:auth_type] = 2
     redirect_to root_path
   end
 
