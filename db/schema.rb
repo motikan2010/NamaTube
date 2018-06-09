@@ -10,22 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180606165104) do
+ActiveRecord::Schema.define(version: 20180609111528) do
 
-  create_table "github_users", force: :cascade do |t|
-    t.string "name"
-    t.string "provider"
+  create_table "users", force: :cascade do |t|
     t.text "uid"
-    t.string "oauth_token"
+    t.integer "auth_type"
+    t.string "name"
+    t.string "nickname"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "twitter_users", force: :cascade do |t|
-    t.string "provider"
-    t.string "uid"
-    t.string "nickname"
-    t.string "image_url"
+  create_table "videos", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "url"
+    t.text "title"
+    t.integer "source_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
