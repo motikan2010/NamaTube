@@ -2,6 +2,11 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.video-card-body, .video-top-div {
+  padding: 0 !important;
+}
+
 .video-list-p {
   padding: 10px !important;
+  font-size: 1.0em
 }

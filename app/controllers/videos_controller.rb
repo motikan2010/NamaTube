@@ -1,6 +1,7 @@
 class VideosController < ApplicationController
 
   include Service::YoutubeApiService
+  include Service::AnalyzeEntityService
 
   def index
     @videos = Video.all()
@@ -28,12 +29,19 @@ class VideosController < ApplicationController
 
     # ビデオの情報を取得
     video_info = get_video_info(video_id)
+    video_thumbnail_url = video_info['items'][0]['snippet']['thumbnails']['high']['url']
+
+    # 動画タイトルの解析
+    analyzed_title = analyze_sentence(title)
+
+    # TODO 文字列の正規化
+    # TODO タグとしての登録
 
     @video = Video.create
     @video.user_id = session[:user_id]
     @video.url = "https://www.youtube.com/embed/#{video_id}"
     @video.title = title
-    @video.thumbnail = video_info['items'][0]['snippet']['thumbnails']['high']['url']
+    @video.thumbnail = video_thumbnail_url
     @video.source_type = 1
 
     respond_to do |format|
