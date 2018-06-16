@@ -1,6 +1,6 @@
 require 'httpclient'
 
-module Service::AnalyzeEntityService
+module Util::AnalyzeEntityUtil
   extend ActiveSupport::Concern
 
   def analyze_sentence(sentence)

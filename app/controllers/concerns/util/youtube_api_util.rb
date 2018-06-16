@@ -1,6 +1,6 @@
 require 'httpclient'
 
-module Service::YoutubeApiService
+module Util::YoutubeApiUtil
   extend ActiveSupport::Concern
 
   def get_video_info(video_id)
