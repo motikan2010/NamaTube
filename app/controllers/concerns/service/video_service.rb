@@ -20,7 +20,7 @@ module Service::VideoService
 
     @video = Video.create
     @video.user_id = session[:user_id]
-    @video.url = "https://www.youtube.com/embed/#{video_id}"
+    @video.url = video_id
     @video.title = title
     @video.thumbnail = video_thumbnail_url
     @video.source_type = 1

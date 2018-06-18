@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="col-md-6 offset-md-3 py-5">
+  <div class="col-md-10 offset-md-1 py-5">
     <div class="form-group">
       <label><%= @video.title %></label><br>
       <% @video.tags.each do |tag| %>
@@ -7,7 +7,60 @@
       <% end %>
     </div>
     <div class="embed-responsive embed-responsive-16by9">
-      <iframe class="embed-responsive-item" src="<%= @video.url %>" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <div id="video"></div>
     </div>
   </div>
 </div>
+<script>
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  var ytPlayer;
+  var videoList = [
+    '<%= @video.url %>',
+    '',
+    ''
+  ];
+  var videoIndex = 0;
+  function onYouTubeIframeAPIReady() {
+    ytPlayer = new YT.Player('video',
+      {
+        width: 640,
+        height: 390,
+        videoId: videoList[videoIndex],
+        playerVars: {
+          rel: 0,
+          autoplay: 1
+        },
+        events: {
+          'onStateChange': onPlayerStateChange
+        }
+      }
+    );
+  }
+
+  var playerStop = false;
+  function onPlayerStateChange(event) {
+    var ytStatus = event.data;
+    if (ytStatus === YT.PlayerState.ENDED) {
+      console.log('再生終了');
+      videoIndex++;
+      videoIndex = videoIndex % videoList.length;
+      event.target.loadVideoById(videoList[videoIndex]);
+    }
+
+    if (ytStatus === YT.PlayerState.PLAYING) {
+      if(playerStop) {
+        console.log('再生中');
+        ytPlayer.seekTo(60);
+        playerStop = false;
+      }
+    }
+    if (ytStatus === YT.PlayerState.PAUSED) {
+      console.log('停止中');
+      playerStop = true;
+    }
+  }
+</script>
