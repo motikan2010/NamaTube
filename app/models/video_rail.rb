@@ -1,0 +1,2 @@
+class VideoRail < ApplicationRecord
+end

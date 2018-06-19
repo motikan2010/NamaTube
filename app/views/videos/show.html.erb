@@ -1,9 +1,10 @@
 <div class="container">
   <div class="col-md-10 offset-md-1 py-5">
     <div class="form-group">
-      <label><%= @video.title %></label><br>
-      <% @video.tags.each do |tag| %>
-          <%= link_to(tag.name, "#{videos_path}?t=#{tag.name}", class: 'badge badge-primary') %>
+      <% @videos.each do |video| %>
+        <% video.tags.each do |tag| %>
+            <%= link_to(tag.name, "#{videos_path}?t=#{tag.name}", class: 'badge badge-primary') %>
+        <% end %>
       <% end %>
     </div>
     <div class="embed-responsive embed-responsive-16by9">
@@ -19,9 +20,9 @@
 
   var ytPlayer;
   var videoList = [
-    '<%= @video.url %>',
-    '',
-    ''
+    <% @videos.each do |video| %>
+    '<%= video.youtube_id %>',
+    <% end %>
   ];
   var videoIndex = 0;
   function onYouTubeIframeAPIReady() {
@@ -35,10 +36,17 @@
           autoplay: 1
         },
         events: {
+          'onReady': onPlayerReady,
           'onStateChange': onPlayerStateChange
         }
       }
     );
+  }
+
+  // 自動再生
+  function onPlayerReady(event) {
+    ytPlayer.seekTo(60);
+    event.target.playVideo();
   }
 
   var playerStop = false;
@@ -54,7 +62,7 @@
     if (ytStatus === YT.PlayerState.PLAYING) {
       if(playerStop) {
         console.log('再生中');
-        ytPlayer.seekTo(60);
+        // ytPlayer.seekTo(60);
         playerStop = false;
       }
     }

@@ -11,7 +11,7 @@ class VideosController < ApplicationController
   end
 
   def show
-    @video = Video.find(params[:id])
+    @videos = Video.where(:video_rail_id => params[:id])
   end
 
   def new
@@ -19,24 +19,26 @@ class VideosController < ApplicationController
   end
 
   def confirm
-    url = params[:video_url]
-    logger.info url
+    logger.info params[:video_url]
 
-    @video_id = url.split('v=')[1].split('&')[0]
-    video_info = get_video_info(@video_id)
-
-    @video_title = video_info['items'][0]['snippet']['title']
+    @video_infos = []
+    params[:video_url].each { |url|
+      video_id = url.split('v=')[1].split('&')[0]
+      info = get_video_info(video_id)
+      title = info['items'][0]['snippet']['title']
+      @video_infos.push({:video_id => video_id, :title => title})
+    }
   end
 
   def create
-    video_id = params[:video_id]
-    title = params[:title]
+    video_ids = params[:video_id]
+    titles = params[:title]
 
-    success_flag = regist_video video_id, title
+    success_flag = regist_video video_ids, titles
 
     respond_to do |format|
       if success_flag
-        format.html { redirect_to @video, notice: 'Product was successfully created.' }
+        format.html { redirect_to @video_rail, notice: 'Product was successfully created.' }
       else
         format.html { render action: 'new' }
       end

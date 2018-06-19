@@ -13,45 +13,55 @@ module Service::VideoService
   end
 
   # ビデオの新規登録
-  def regist_video(video_id, title)
-    # ビデオの情報を取得
-    video_info = get_video_info(video_id)
-    video_thumbnail_url = video_info['items'][0]['snippet']['thumbnails']['high']['url']
+  def regist_video(video_ids, titles)
 
-    @video = Video.create
-    @video.user_id = session[:user_id]
-    @video.url = video_id
-    @video.title = title
-    @video.thumbnail = video_thumbnail_url
-    @video.source_type = 1
+    @video_rail = VideoRail.create
+    @video_rail.user_id = session[:user_id]
+    @video_rail.save
 
-    unless @video.save
-      # 登録の失敗
-      false
-    end
+    video_ids.each_with_index { |video_id, i|
+      # ビデオの情報を取得
+      video_info = get_video_info(video_id)
+      video_thumbnail_url = video_info['items'][0]['snippet']['thumbnails']['high']['url']
 
-    # 動画タイトルの解析
-    analyzed_video_info = analyze_sentence(title)
+      @video = Video.create
+      @video.user_id = session[:user_id]
+      @video.video_rail_id = @video_rail.id
+      @video.youtube_id = video_id
+      @video.title = titles[i]
+      @video.thumbnail = video_thumbnail_url
+      @video.source_type = 1
 
-    # タグの正規化
-    tags = []
-    analyzed_video_info['entities'].each { |value|
-      UNF::Normalizer.normalize(value['name'], :nfkc).downcase.split(' ').each {|tag_name|
-        if tag_name.size >= 3
-          tag = Tag.where(:name => tag_name).first
-          if tag == nil
-            # 存在しないタグの追加
-            tag = Tag.create
-            tag.name = tag_name
-            tag.save
+      unless @video.save
+        # 登録の失敗
+        false
+      end
+
+      # 動画タイトルの解析
+      analyzed_video_info = analyze_sentence(titles[i])
+
+      # タグの正規化
+      tags = []
+      analyzed_video_info['entities'].each { |value|
+        UNF::Normalizer.normalize(value['name'], :nfkc).downcase.split(' ').each {|tag_name|
+          if tag_name.size >= 3
+            tag = Tag.where(:name => tag_name).first
+            if tag == nil
+              # 存在しないタグの追加
+              tag = Tag.create
+              tag.name = tag_name
+              tag.save
+            end
+            tags.push(tag)
           end
-          tags.push(tag)
-        end
+        }
       }
+
+      @video.tags = tags
+      @video.save
     }
 
-    @video.tags = tags
-    @video.save
+    true
   end
 
 end

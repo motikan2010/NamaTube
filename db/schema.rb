@@ -27,6 +27,12 @@ ActiveRecord::Schema.define(version: 20180617051557) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "video_rails", force: :cascade do |t|
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "video_tags", force: :cascade do |t|
     t.integer "video_id"
     t.integer "tag_id"
@@ -38,7 +44,8 @@ ActiveRecord::Schema.define(version: 20180617051557) do
 
   create_table "videos", force: :cascade do |t|
     t.integer "user_id"
-    t.string "url"
+    t.integer "video_rail_id"
+    t.string "youtube_id"
     t.text "title"
     t.string "thumbnail"
     t.integer "source_type"
