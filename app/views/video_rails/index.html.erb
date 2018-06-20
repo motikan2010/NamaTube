@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="col-md-12 py-5">
+    <% @video_rails.each_with_index do |video_rail, i| %>
+      <% if i % 3 == 0 || i == 0 %>
+      <div class="row card-deck">
+      <% end %>
+        <div class="col-md-4 video-top-div">
+          <div class="card mb-4 box-shadow">
+            <%= link_to(video_rail, class: 'card-body video-card-body') do %>
+              <img class="card-img-top" src="<%= @video_list_info[i][:thumbnail] %>">
+              <p class="card-text video-list-p"><%= @video_list_info[i][:title] %></p>
+            <% end %>
+          </div>
+        </div>
+      <% if (i+1) % 3 == 0 || @video_rails.last == video_rail %>
+      </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

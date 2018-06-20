@@ -22,7 +22,14 @@ module Service::VideoService
     video_ids.each_with_index { |video_id, i|
       # ビデオの情報を取得
       video_info = get_video_info(video_id)
+      # 動画のサムネイル
       video_thumbnail_url = video_info['items'][0]['snippet']['thumbnails']['high']['url']
+
+      # 動画の再生時間
+      video_duration = video_info['items'][0]['contentDetails']['duration']
+      video_hour = (video_duration =~ /^PT([0-9]+)H/) ? video_duration.match(/^PT([0-9]+)H/)[1].to_i : 0
+      video_minutes = (video_duration =~ /([0-9]+)M/) ? video_duration.match(/([0-9]+)M/)[1].to_i : 0
+      video_second = (video_duration =~ /([0-9]+)S$/) ? video_duration.match(/([0-9]+)S$/)[1].to_i : 0
 
       @video = Video.create
       @video.user_id = session[:user_id]
@@ -30,7 +37,8 @@ module Service::VideoService
       @video.youtube_id = video_id
       @video.title = titles[i]
       @video.thumbnail = video_thumbnail_url
-      @video.source_type = 1
+      puts (video_hour * 3600 + video_minutes * 60 + video_second)
+      @video.play_time = (video_hour * 3600 + video_minutes * 60 + video_second)
 
       unless @video.save
         # 登録の失敗

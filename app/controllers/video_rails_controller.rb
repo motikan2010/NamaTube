@@ -1,13 +1,21 @@
-class VideosController < ApplicationController
+class VideoRailsController < ApplicationController
 
   include Service::VideoService
 
   def index
     if params[:t]
-      @videos = search_video(params)
+      videos = search_video(params)
+      rail_id_list =  videos.map{|v| v.video_rail_id}
+      @video_rails = VideoRail.where(:id => rail_id_list)
     else
-      @videos = Video.all
+      @video_rails = VideoRail.all
     end
+
+    @video_list_info =[]
+    @video_rails.each{ |video_rail|
+      video = video_rail.videos.first
+      @video_list_info.push({:title => video.title, :thumbnail => video.thumbnail})
+    }
   end
 
   def show

@@ -6,7 +6,7 @@ class CreateVideos < ActiveRecord::Migration[5.1]
       t.string :youtube_id
       t.text :title
       t.string :thumbnail
-      t.integer :source_type
+      t.integer :play_time
 
       t.timestamps
     end

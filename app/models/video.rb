@@ -1,4 +1,5 @@
 class Video < ApplicationRecord
+  belongs_to :video_rail
   has_many :video_tags, dependent: :destroy
   has_many :tags, :through => :video_tags
 

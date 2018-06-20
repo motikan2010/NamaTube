@@ -3,7 +3,7 @@
     <div class="form-group">
       <% @videos.each do |video| %>
         <% video.tags.each do |tag| %>
-            <%= link_to(tag.name, "#{videos_path}?t=#{tag.name}", class: 'badge badge-primary') %>
+            <%= link_to(tag.name, "#{video_rails_path}?t=#{tag.name}", class: 'badge badge-primary') %>
         <% end %>
       <% end %>
     </div>
@@ -18,19 +18,45 @@
   var firstScriptTag = document.getElementsByTagName('script')[0];
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
+  // 動画情報
   var ytPlayer;
   var videoList = [
     <% @videos.each do |video| %>
-    '<%= video.youtube_id %>',
+    {id: '<%= video.youtube_id %>', playTime: <%= video.play_time %>},
     <% end %>
   ];
   var videoIndex = 0;
+  var startSeconds = 0;
+
+  init();
+
+  function init() {
+    var date = new Date();
+    var totalSeconds = date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds();
+    var totalPlayTime = 0;
+    for (i=0; i < videoList.length; i++) {
+      totalPlayTime += videoList[i]['playTime'];
+    }
+    var startIndex = 0;
+    var seconds = totalSeconds % totalPlayTime;
+    for (i=0; i < videoList.length; i++) {
+      if (seconds >= videoList[i]['playTime']) {
+        seconds -= videoList[i]['playTime'];
+        startIndex = i;
+      } else {
+        break;
+      }
+    }
+    videoIndex = startIndex;
+    startSeconds = seconds;
+  }
+
   function onYouTubeIframeAPIReady() {
     ytPlayer = new YT.Player('video',
       {
         width: 640,
         height: 390,
-        videoId: videoList[videoIndex],
+        videoId: videoList[videoIndex]['id'],
         playerVars: {
           rel: 0,
           autoplay: 1
@@ -45,13 +71,15 @@
 
   // 自動再生
   function onPlayerReady(event) {
-    ytPlayer.seekTo(60);
+    console.log("index -> " + videoIndex + " seconds -> " + startSeconds);
+    ytPlayer.seekTo(startSeconds);
     event.target.playVideo();
   }
 
   var playerStop = false;
   function onPlayerStateChange(event) {
     var ytStatus = event.data;
+    // 動画終了 次の動画を再生
     if (ytStatus === YT.PlayerState.ENDED) {
       console.log('再生終了');
       videoIndex++;
@@ -62,7 +90,8 @@
     if (ytStatus === YT.PlayerState.PLAYING) {
       if(playerStop) {
         console.log('再生中');
-        // ytPlayer.seekTo(60);
+        init();
+        ytPlayer.seekTo(startSeconds);
         playerStop = false;
       }
     }

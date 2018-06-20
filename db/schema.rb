@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 20180617051557) do
     t.string "youtube_id"
     t.text "title"
     t.string "thumbnail"
-    t.integer "source_type"
+    t.integer "play_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

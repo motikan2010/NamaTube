@@ -8,7 +8,7 @@ module Util::YoutubeApiUtil
     query = {
         id: video_id,
         key: ENV['GOOGLE_API_KEY'],
-        fields: 'items(id,snippet(channelTitle,title,thumbnails),statistics)',
+        fields: 'items(id,snippet(title,thumbnails),contentDetails)',
         part: 'snippet,contentDetails,statistics',
     }
     res = client.get('https://www.googleapis.com/youtube/v3/videos', :query => query, :follow_redirect => true)

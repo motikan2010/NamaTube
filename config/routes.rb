@@ -2,8 +2,8 @@ Rails.application.routes.draw do
 
   root to: 'top#index'
 
-  post '/videos/confirm', to: 'videos#confirm'
-  resources :videos
+  post '/videos/confirm', to: 'video_rails#confirm'
+  resources :video_rails, :path => 'videos'
 
   get '/mypage', to: 'mypage#index'
 
