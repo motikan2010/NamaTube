@@ -11,11 +11,14 @@ class VideoRailsController < ApplicationController
       @video_rails = VideoRail.all
     end
 
+    # 一覧に表示する情報
     @video_list_info =[]
-    @video_rails.each{ |video_rail|
-      video = video_rail.videos.first
-      @video_list_info.push({:title => video.title, :thumbnail => video.thumbnail})
+    videos = Video.where(:video_rail_id => @video_rails.map{|v| v.id})
+    videos.each{ |video|
+      next unless @video_list_info[video.video_rail_id] == nil # 最初の動画情報を格納
+      @video_list_info[video.video_rail_id] = {:title => video.title, :thumbnail => video.thumbnail}
     }
+
   end
 
   def show

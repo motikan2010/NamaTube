@@ -7,8 +7,8 @@
         <div class="col-md-4 video-top-div">
           <div class="card mb-4 box-shadow">
             <%= link_to(video_rail, class: 'card-body video-card-body') do %>
-              <img class="card-img-top" src="<%= @video_list_info[i][:thumbnail] %>">
-              <p class="card-text video-list-p"><%= @video_list_info[i][:title] %></p>
+              <img class="card-img-top" src="<%= @video_list_info[video_rail.id][:thumbnail] %>">
+              <p class="card-text video-list-p"><%= @video_list_info[video_rail.id][:title] %></p>
             <% end %>
           </div>
         </div>

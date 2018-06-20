@@ -42,7 +42,7 @@
     for (i=0; i < videoList.length; i++) {
       if (seconds >= videoList[i]['playTime']) {
         seconds -= videoList[i]['playTime'];
-        startIndex = i;
+        startIndex++;
       } else {
         break;
       }
@@ -84,7 +84,7 @@
       console.log('再生終了');
       videoIndex++;
       videoIndex = videoIndex % videoList.length;
-      event.target.loadVideoById(videoList[videoIndex]);
+      event.target.loadVideoById(videoList[videoIndex]['id']);
     }
 
     if (ytStatus === YT.PlayerState.PLAYING) {
