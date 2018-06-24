@@ -10,3 +10,41 @@
   padding: 10px !important;
   font-size: 1.0em
 }
+
+// タグ一覧
+.tag-div {
+  padding-top: 3rem !important;
+}
+
+//
+.row-eq-height {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+// メッセージエリア
+.scrollbar-ripe::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #F5F5F5;
+  border-radius: 10px;
+}
+
+.scrollbar-ripe::-webkit-scrollbar {
+  width: 12px;
+  background-color: #F5F5F5;
+}
+
+.scrollbar-ripe::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 1);
+}
+
+.thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.message-div {
+  position: relative;
+  overflow-y: scroll;
+  height: 390px;
+}
