@@ -23,6 +23,7 @@ class VideoRailsController < ApplicationController
 
   def show
     @videos = Video.where(:video_rail_id => params[:id])
+    @messages = Message.where(:video_rail_id => params[:id])
   end
 
   def new
