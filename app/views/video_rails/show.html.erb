@@ -32,13 +32,18 @@
   </div>
   <!-- コメント入力 エリア -->
   <div class="row">
-    <div class="col-md-7 offset-md-1 py-2">
-      <form>
-        <div class="new-post">
-          <input name="content" class="form-control" data-behavior="room_speaker"/>
-          <%= hidden_field_tag 'room_id', @videos.first.video_rail_id, {:id => 'room_id'} %>
-        </div>
-      </form>
+    <div class="col-md-7 offset-md-1 py-1">
+      <% if logged_in? %>
+        <form class="form-inline col-md-12">
+          <div class="new-post col-md-12">
+            <input id="comment" name="content" class="form-control" data-behavior="room_speaker"/>
+            <button id="comment_send" type="button" class="btn btn-primary">送信</button>
+            <%= hidden_field_tag 'room_id', @videos.first.video_rail_id, {:id => 'room_id'} %>
+          </div>
+        </form>
+      <% else %>
+
+      <% end %>
     </div>
   </div>
 </div>

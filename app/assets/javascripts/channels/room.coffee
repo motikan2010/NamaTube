@@ -1,5 +1,5 @@
 $(document).ready ->
-  $(".message-div").scrollTop($(".message-div")[0].scrollHeight);
+  $('.message-div').scrollTop($('.message-div')[0].scrollHeight);
   messages = $('#messages')
   App.room = App.cable.subscriptions.create { channel: "RoomChannel", room_id: messages.data('room_id') },
     connected: ->
@@ -16,8 +16,16 @@ $(document).ready ->
       # コメント欄末尾にスクロール
       $(".message-div").scrollTop($(".message-div")[0].scrollHeight);
 
+# コメントの送信 Enter
 $(document).on 'keypress', '[data-behavior~=room_speaker]', (event) ->
-  if event.keyCode is 13
+  if (event.keyCode is 13) and (event.target.value isnt '')
     App.room.speak(event.target.value, $('#room_id').val())
     event.target.value = ''
-    event.preventDefault()
+  event.preventDefault()
+
+# コメントの送信 ボタン
+$('#comment_send').on 'click', () ->
+  comment = $('#comment').val()
+  if (comment isnt '')
+    App.room.speak(comment, $('#room_id').val())
+    $('#comment').val('')
