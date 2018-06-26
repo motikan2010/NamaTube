@@ -14,6 +14,10 @@
   <!-- 動画 エリア -->
   <div class="row row-eq-height">
     <div class="col-md-7 offset-md-1">
+      <% @videos.each do |video| %>
+          <div class="video-list" data-youtube-id="<%= video.youtube_id %>" data-play-time="<%= video.play_time %>"></div>
+      <% end %>
+
       <div class="embed-responsive embed-responsive-16by9">
         <div id="video"></div>
       </div>
@@ -38,92 +42,9 @@
     </div>
   </div>
 </div>
-<script>
-  var videoList = [
-    <% @videos.each do |video| %>
-    {id: '<%= video.youtube_id %>', playTime: <%= video.play_time %>},
-    <% end %>
-  ];
-  var videoIndex = 0;
-  var startSeconds = 0;
 
-  init();
-
-  function init() {
-    var date = new Date();
-    var totalSeconds = date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds();
-    var totalPlayTime = 0;
-    for (i=0; i < videoList.length; i++) {
-      totalPlayTime += videoList[i]['playTime'];
-    }
-    var startIndex = 0;
-    var seconds = totalSeconds % totalPlayTime;
-    for (i=0; i < videoList.length; i++) {
-      if (seconds >= videoList[i]['playTime']) {
-        seconds -= videoList[i]['playTime'];
-        startIndex++;
-      } else {
-        break;
-      }
-    }
-    videoIndex = startIndex;
-    startSeconds = seconds;
-  }
-
-  var tag = document.createElement('script');
-  tag.src = "https://www.youtube.com/iframe_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-  var ytPlayer;
-  function onYouTubeIframeAPIReady() {
-    ytPlayer = new YT.Player('video',
-      {
-        width: 640,
-        height: 390,
-        videoId: videoList[videoIndex]['id'],
-        events: {
-          'onReady': onPlayerReady,
-          'onStateChange': onPlayerStateChange
-        },
-        playerVars: {
-          autoplay: 1,
-          rel: 0
-        }
-      }
-    );
-  }
-
-  // 自動再生
-  function onPlayerReady(event) {
-    console.log("index -> " + videoIndex + " seconds -> " + startSeconds);
-    ytPlayer.seekTo(startSeconds);
-    event.target.playVideo();
-  }
-
-  var playerStop = false;
-  function onPlayerStateChange(event) {
-    var ytStatus = event.data;
-
-    // 動画終了 次の動画を再生
-    if (ytStatus === YT.PlayerState.ENDED) {
-      console.log('再生終了');
-      videoIndex++;
-      videoIndex = videoIndex % videoList.length;
-      event.target.loadVideoById(videoList[videoIndex]['id']);
-    }
-
-    if (ytStatus === YT.PlayerState.PLAYING) {
-      if(playerStop) {
-        console.log('再生中');
-        init();
-        ytPlayer.seekTo(startSeconds);
-        playerStop = false;
-      }
-    }
-    if (ytStatus === YT.PlayerState.PAUSED) {
-      console.log('停止中');
-      playerStop = true;
-    }
-  }
-</script>
+<% content_for :inline_js do %>
+<%= javascript_include_tag 'videos' %>
+<%= javascript_include_tag 'cable' %>
+<%= javascript_include_tag 'channels/room' %>
+<% end %>
