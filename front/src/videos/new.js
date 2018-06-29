@@ -3,47 +3,69 @@ import ReactDom from 'react-dom';
 
 class App extends React.Component {
 
+  errorList; // エラーメッセージ格納先
+
   constructor() {
     super();
+    let ele = document.getElementById('video_url_list');
+    let videoUrlList = (ele !== null) ? JSON.parse(ele.getAttribute('data-json')) : [""];
     this.state = {
-      urlInputList: [0],
-      index: 1
+      videoUrlList: videoUrlList
     };
 
+    this.componentWillMount = this.componentWillMount.bind(this);
     this.addUrlInput = this.addUrlInput.bind(this);
     this.removeUrlInput = this.removeUrlInput.bind(this);
+    this.changeVideoUrl = this.changeVideoUrl.bind(this);
+  }
+
+  componentWillMount() {
+    // エラーメッセージの格納
+    let ele = document.getElementById('video_error_list');
+    let videoErrorList = (ele !== null) ? JSON.parse(ele.getAttribute('data-json')) : [""];
+    this.errorList = [];
+    for (let i=0; i < videoErrorList.length; i++) {
+      this.errorList[videoErrorList[i]['index']] = videoErrorList[i]['msg'];
+    }
   }
 
   // URLフォーム追加
   addUrlInput() {
-    if (this.state.index > 10) {
+    if (this.state.videoUrlList.length > 10) {
       return;
     }
     this.setState({
-      urlInputList: this.state.urlInputList.concat([this.state.index]),
-      index: this.state.index + 1
+      videoUrlList: this.state.videoUrlList.concat([""])
     });
   }
 
   // URLフォーム削除
   removeUrlInput() {
-    if (this.state.index <= 1) {
+    if (this.state.videoUrlList.length <= 1) {
       return;
     }
-    this.state.urlInputList.pop(); // 削除
+    this.state.videoUrlList.pop(); // 削除
     this.setState({
-      urlInputList: this.state.urlInputList,
-      index: this.state.index - 1
+      videoUrlList: this.state.videoUrlList
     });
-    console.log(this.state.index);
-    console.log(this.state.urlInputList);
+  }
+
+  changeVideoUrl(id, e) {
+    this.errorList[id] = ''; // エラーメッセージを消す
+
+    const videoUrlList = this.state.videoUrlList.slice();
+    videoUrlList[id] = e.target.value;
+    this.setState({
+      videoUrlList: videoUrlList
+    });
   }
 
   render () {
-    let urlInputList = this.state.urlInputList.map(function (i){
+    let urlInputList = this.state.videoUrlList.map((videoUrl, i) => {
       return (
           <div key={i} className="form-group">
-            <input type="text" className="form-control" name="video_url[]" placeholder="https://www.youtube.com/watch?v=XXXXXXXXXXX"/>
+            <label>{this.errorList[i]}</label>
+            <input type="text" className="form-control" name="video_url[]" value={videoUrl} onChange={e => this.changeVideoUrl(i, e)} placeholder="https://www.youtube.com/watch?v=XXXXXXXXXXX"/>
           </div>
       )
     });

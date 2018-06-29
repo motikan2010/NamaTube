@@ -33,13 +33,34 @@ class VideoRailsController < ApplicationController
   def confirm
     logger.info params[:video_url]
 
+    errors = []
     @video_infos = []
-    params[:video_url].each { |url|
-      video_id = url.split('v=')[1].split('&')[0]
-      info = get_video_info(video_id)
-      title = info['items'][0]['snippet']['title']
-      @video_infos.push({:video_id => video_id, :title => title})
+    params[:video_url].each_with_index { |url, index|
+      v_param = url.split('v=')[1]
+      if v_param != nil
+      video_id = v_param.split('&')[0]
+        info = get_video_info(video_id) # 動画の情報取得
+        if info['items'].size == 0
+          errors.push({:index => index, :msg => 'URLが正しくありません'})
+        else
+          title = info['items'][0]['snippet']['title']
+          @video_infos.push({:video_id => video_id, :title => title})
+        end
+      else
+        errors.push({:index => index, :msg => 'URLを入力してください'})
+      end
     }
+
+
+    respond_to do |format|
+      if errors.size == 0
+        format.html { render action: 'confirm' }
+      else
+        @video_url_json = params[:video_url].to_json
+        @errors_json = errors.to_json
+        format.html { render action: 'new' }
+      end
+    end
   end
 
   def create
