@@ -8,8 +8,14 @@ module Service::VideoService
 
   # ビデオの検索
   def search_video(params)
-    tag = Tag.where(:name => params[:t]).first
-    tag.videos
+    if params[:t]
+      # タグ検索
+      tag = Tag.where(:name => params[:t]).first
+      tag.videos
+    elsif params[:k]
+      # キーワード検索
+      Video.where('title LIKE(?)', "%#{params[:k]}%")
+    end
   end
 
   # ビデオの新規登録

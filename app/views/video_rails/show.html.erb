@@ -11,19 +11,19 @@
       </div>
     </div>
   </div>
-  <!-- 動画 エリア -->
   <div class="row row-eq-height">
-    <div class="col-md-7 offset-md-1">
+    <!-- 動画 エリア -->
+    <div class="col-md-7 offset-md-1 video-div">
       <% @videos.each do |video| %>
           <div class="video-list" data-youtube-id="<%= video.youtube_id %>" data-play-time="<%= video.play_time %>"></div>
       <% end %>
-
       <div class="embed-responsive embed-responsive-16by9">
         <div id="video"></div>
       </div>
     </div>
-    <div class="col-md-3">
-      <div class="card message-div scrollbar-ripe">
+    <!-- コメント表示 エリア -->
+    <div class="col-md-3 message-div">
+      <div class="card scrollbar-ripe">
         <div id="messages" class="card-body" data-room_id="<%= @videos.first.video_rail_id %>">
           <%= render @messages %>
         </div>
@@ -32,18 +32,21 @@
   </div>
   <!-- コメント入力 エリア -->
   <div class="row">
-    <div class="col-md-7 offset-md-1 py-1">
-      <% if logged_in? %>
-        <form class="form-inline col-md-12">
+    <div class="col-md-7 offset-md-1 py-2">
+        <form class="form-inline">
           <div class="new-post col-md-12">
-            <input id="comment" name="content" class="form-control" data-behavior="room_speaker"/>
-            <button id="comment_send" type="button" class="btn btn-primary">送信</button>
-            <%= hidden_field_tag 'room_id', @videos.first.video_rail_id, {:id => 'room_id'} %>
+            <div class="form-group">
+            <% if logged_in? %>
+                <input type="text" id="comment" name="content" class="form-control col-md-10" data-behavior="room_message"/>
+                <button id="comment_send" type="button" class="btn btn-primary col-md-2">送信</button>
+                <%= hidden_field_tag 'room_id', @videos.first.video_rail_id, {:id => 'room_id'} %>
+            <% else %>
+                <input id="comment" class="form-control col-md-10" value="コメントを投稿するにはログインする必要があります" disabled="disabled"/>
+                <button id="comment_send" type="button" class="btn btn-primary col-md-2" disabled="disabled">送信</button>
+            <% end %>
+            </div>
           </div>
         </form>
-      <% else %>
-
-      <% end %>
     </div>
   </div>
 </div>

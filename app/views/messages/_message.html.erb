@@ -1,5 +1,9 @@
 <div class="message">
-  <hr/>
-  <span><%= message.content %></span><br/>
-  <small><%= message.created_at %></small>
+  <div>
+    <p class="message-body"><%= message.content %></p>
+  </div>
+  <div class="text-right">
+    <span class="message-date"><%= message.created_at.strftime('%m/%d %H:%M') %></span>
+  </div>
+  <hr class="message-hr"/>
 </div>

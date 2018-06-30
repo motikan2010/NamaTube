@@ -64,8 +64,9 @@ class App extends React.Component {
     let urlInputList = this.state.videoUrlList.map((videoUrl, i) => {
       return (
           <div key={i} className="form-group">
-            <label>{this.errorList[i]}</label>
-            <input type="text" className="form-control" name="video_url[]" value={videoUrl} onChange={e => this.changeVideoUrl(i, e)} placeholder="https://www.youtube.com/watch?v=XXXXXXXXXXX"/>
+            <label className="error-msg">{this.errorList[i]}</label>
+            <input type="text" className="form-control" name="video_url[]" value={videoUrl}
+                   onChange={e => this.changeVideoUrl(i, e)} placeholder="https://www.youtube.com/watch?v=XXXXXXXXXXX"/>
           </div>
       )
     });

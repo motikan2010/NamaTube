@@ -3,9 +3,10 @@ class VideoRailsController < ApplicationController
   include Service::VideoService
 
   def index
-    if params[:t]
+    if params[:t] || params[:k]
       videos = search_video(params)
       rail_id_list =  videos.map{|v| v.video_rail_id}
+      p rail_id_list
       @video_rails = VideoRail.where(:id => rail_id_list)
     else
       @video_rails = VideoRail.all
@@ -19,6 +20,7 @@ class VideoRailsController < ApplicationController
       @video_list_info[video.video_rail_id] = {:title => video.title, :thumbnail => video.thumbnail}
     }
 
+    @search_word = params[:k]
   end
 
   def show
