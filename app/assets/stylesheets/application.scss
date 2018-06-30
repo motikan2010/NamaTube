@@ -12,8 +12,13 @@
  *
  *= require_tree .
  *= require_self
+ *= require_tree ../../../vendor/assets/.
  */
 
+html, body {
+  font-family:"ヒラギノ角ゴ Pro W3", メイリオ, Osaka, Arial, Verdana, "ＭＳ Ｐゴシック", sans-serif !important;
+}
+
 a {
-  text-decoration: none !important;;
+  text-decoration: none !important;
 }
