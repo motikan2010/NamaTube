@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
-  root to: 'top#index'
+  # root to: 'top#index' # TODO トップを用意
+  root to: 'video_rails#index'
 
   post '/videos/confirm', to: 'video_rails#confirm'
   resources :video_rails, :path => 'videos'
