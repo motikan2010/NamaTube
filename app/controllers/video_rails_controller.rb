@@ -2,6 +2,8 @@ class VideoRailsController < ApplicationController
 
   include Service::VideoService
 
+  before_action :authenticate, only: [:new, :create, :update, :destroy]
+
   def index
     if params[:t] || params[:k]
       videos = search_video(params)
