@@ -1,6 +1,11 @@
-<form class="form-signin">
-  <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-  <%= link_to 'Githubアカウントでログイン', '/auth/github', class: 'btn btn-lg btn-primary btn-block' %>
-  <%= link_to 'Twitterでログイン', 'auth/twitter', class: 'btn btn-lg btn-primary btn-block' %>
-  <%= link_to 'ログアウト', logout_path, class: 'btn btn-lg btn-warning btn-block' %>
-</form>
+<div class="container">
+  <form class="form-signin py-5">
+    <% if @alert %>
+        <div class="alert alert-danger" role="alert">
+          <%= @alert %>
+        </div>
+    <% end %>
+    <%= link_to 'Twitterでログイン', 'auth/twitter', class: 'btn btn-lg btn-primary btn-block' %>
+    <%= link_to 'GitHubでログイン', '/auth/github', class: 'btn btn-lg btn-primary btn-block' %>
+  </form>
+</div>

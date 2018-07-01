@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
 
   def index
-
+    @alert = flash[:alert]
   end
 
   # Twitter
