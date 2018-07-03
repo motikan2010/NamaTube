@@ -9,8 +9,6 @@ class RoomChannel < ApplicationCable::Channel
   end
 
   def speak(data)
-    p '---'
-    p params
     Message.create!(content: data['message'], user_id: current_user.id, video_rail_id: params['room_id'])
   end
 
