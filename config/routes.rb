@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :video_rails, :path => 'videos'
 
   get '/mypage', to: 'mypage#index'
+  get '/mypage/videos', to: 'mypage#videos'
 
   get '/login', to: 'sessions#index', as: 'login'
   get '/logout', to: 'sessions#destroy'

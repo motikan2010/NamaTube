@@ -18,6 +18,17 @@ module Service::VideoService
     end
   end
 
+  # 一覧に表示する情報
+  def get_first_video(video_rails)
+    video_list_info =[]
+    videos = Video.where(:video_rail_id => video_rails.map{|v| v.id})
+    videos.each{ |video|
+      next unless video_list_info[video.video_rail_id] == nil # 最初の動画情報を格納
+      video_list_info[video.video_rail_id] = {:title => video.title, :thumbnail => video.thumbnail}
+    }
+    video_list_info
+  end
+
   # ビデオの新規登録
   def regist_video(video_ids, titles)
 
