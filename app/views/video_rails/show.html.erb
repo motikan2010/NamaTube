@@ -41,14 +41,19 @@
         <form class="form-inline">
           <div class="new-post col-md-12">
             <div class="form-group">
-            <% if logged_in? %>
-                <input type="text" id="comment" name="content" class="form-control col-md-10" data-behavior="room_message"/>
-                <button id="comment_send" type="button" class="btn btn-primary col-md-2">送信</button>
-                <%= hidden_field_tag 'room_id', @videos.first.video_rail_id, {:id => 'room_id'} %>
-            <% else %>
-                <input id="comment" class="form-control col-md-10" value="コメントを投稿するにはログインする必要があります" disabled="disabled"/>
-                <button id="comment_send" type="button" class="btn btn-primary col-md-2" disabled="disabled">送信</button>
-            <% end %>
+              <input type="text" id="comment" name="content" class="form-control col-md-10" data-behavior="room_message"/>
+              <button id="comment_send" type="button" class="btn btn-primary col-md-2">送信</button>
+              <%= hidden_field_tag 'room_id', @videos.first.video_rail_id, {:id => 'room_id'} %>
+              <% if false %>
+                  <% if logged_in? %>
+                      <input type="text" id="comment" name="content" class="form-control col-md-10" data-behavior="room_message"/>
+                      <button id="comment_send" type="button" class="btn btn-primary col-md-2">送信</button>
+                      <%= hidden_field_tag 'room_id', @videos.first.video_rail_id, {:id => 'room_id'} %>
+                  <% else %>
+                      <input id="comment" class="form-control col-md-10" value="コメントを投稿するにはログインする必要があります" disabled="disabled"/>
+                      <button id="comment_send" type="button" class="btn btn-primary col-md-2" disabled="disabled">送信</button>
+                  <% end %>
+              <% end %>
             </div>
           </div>
         </form>

@@ -12,7 +12,8 @@ module ApplicationCable
       if verified_user = User.find_by(id: session['user_id'])
         verified_user
       else
-        reject_unauthorized_connection
+        # reject_unauthorized_connection
+        User.find(1) # TODO ログインしていないユーザを許容
       end
     end
 
