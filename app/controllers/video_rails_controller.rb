@@ -14,13 +14,7 @@ class VideoRailsController < ApplicationController
       @video_rails = VideoRail.all
     end
 
-    # 一覧に表示する情報
-    @video_list_info =[]
-    videos = Video.where(:video_rail_id => @video_rails.map{|v| v.id})
-    videos.each{ |video|
-      next unless @video_list_info[video.video_rail_id] == nil # 最初の動画情報を格納
-      @video_list_info[video.video_rail_id] = {:title => video.title, :thumbnail => video.thumbnail}
-    }
+    @video_list_info = get_first_video @video_rails
 
     @search_word = params[:k]
   end
@@ -75,7 +69,7 @@ class VideoRailsController < ApplicationController
 
     respond_to do |format|
       if success_flag
-        format.html { redirect_to @video_rail, notice: 'Product was successfully created.' }
+        format.html { redirect_to @video_rail, notice: '作成が完了しました' }
       else
         format.html { render action: 'new' }
       end
@@ -86,8 +80,15 @@ class VideoRailsController < ApplicationController
 
   end
 
+  # 削除
   def destroy
-
+    video_rail = VideoRail.find(params[:id])
+    if video_rail.user_id == session[:user_id]
+      video_rail.destroy
+      redirect_to mypage_videos_path, notice: '削除しました'
+    else
+      redirect_to mypage_videos_path
+    end
   end
 
 end

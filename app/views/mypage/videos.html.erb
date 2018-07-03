@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="col-md-8 offset-md-2 py-5">
+    <% if flash[:notice] %>
+        <div class="alert alert-success">
+          <%= flash[:notice] %>
+        </div>
+    <% end %>
+    <% @video_rails.each_with_index do |video_rail, i| %>
+        <div class="card flex-md-row mb-4 box-shadow">
+          <div class="col-md-4 thumbnail-div">
+            <%= link_to(video_rail, class: 'card-img-right flex-auto d-none d-md-block') do %>
+                <img class="img-thumbnail" src="<%= @video_list_info[video_rail.id][:thumbnail] %>">
+            <% end %>
+          </div>
+          <div class="col-md-8 thumbnail-div">
+            <div class="card-body d-flex flex-column">
+              <p class="card-text mb-auto"><%= @video_list_info[video_rail.id][:title] %></p>
+              <small class="mb-1 text-muted"><%= video_rail.created_at.strftime('%Y/%m/%d %H:%M') %></small>
+              <div class="row">
+                <div class="col-md-2">
+                  <button href="#" class="btn btn-success" disabled="disabled">編集</button>
+                </div>
+                <div class="col-md-2">
+                  <%= link_to '削除', video_rail, method: :delete, data: { confirm: '削除しますか？' }, class: 'btn btn-danger' %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    <% end %>
+  </div>
+</div>

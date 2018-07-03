@@ -2,6 +2,11 @@
   <!-- タグ一覧 エリア -->
   <div class="row">
     <div class="col-md-10 offset-md-1 tag-div">
+      <% if flash[:notice] %>
+          <div class="alert alert-success">
+            <%= flash[:notice] %>
+          </div>
+      <% end %>
       <div class="form-group">
         <% @videos.each do |video| %>
             <% video.tags.each do |tag| %>
