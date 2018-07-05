@@ -8,10 +8,16 @@ Rails.application.routes.draw do
 
   get '/mypage', to: 'mypage#index'
   get '/mypage/videos', to: 'mypage#videos'
+  get '/mypage/videos', to: 'mypage#videos'
 
   get '/login', to: 'sessions#index', as: 'login'
   get '/logout', to: 'sessions#destroy'
   get 'auth/twitter/callback', to: 'sessions#create_twitter' # Twitter
   get 'auth/github/callback', to: 'sessions#callback' # GitHub
+
+  # API用
+  namespace :api, {format: 'json'} do
+    get 'videos/:id', to: 'video#show'
+  end
 
 end

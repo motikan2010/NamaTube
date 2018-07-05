@@ -2,6 +2,7 @@ module.exports = {
   mode: 'development',
   entry: {
     videos_new: './src/videos/new.js',
+    videos_edit: './src/videos/edit.js',
   },
   output: {
     path: __dirname + '/../app/assets/javascripts/webpack',
