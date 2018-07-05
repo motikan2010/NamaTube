@@ -59,6 +59,17 @@
 <footer class="container text-center">
   <p class="text-muted">&copy; <a href="https://twitter.com/motikan2010" target="_blank">@motikan2010</a> 2018-</p>
 </footer>
+<% if !ENV['GA_TAG'].blank? %>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=<%= ENV['GA_TAG'] %>"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', '<%= ENV['GA_TAG'] %>');
+  </script>
+<% end %>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
