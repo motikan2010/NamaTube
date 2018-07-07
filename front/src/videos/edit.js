@@ -57,7 +57,7 @@ class EditVideo extends React.Component {
     let videos = this.state.videoList.map((video, i) => {
       return (
           <tr key={i}>
-            <td><input type="hidden" name="sort[]" value={i + ':' + video.id}/></td>
+            <td><input type="hidden" name={`sort[${i}]`} value={video.id}/></td>
             <td><img className="rounded edit-video-thumbnail" src={video.thumbnail}/></td>
             <td>{video.title}</td>
             <td className="align-middle"><button type="button" className="btn btn-outline-secondary" onClick={(e) => this.upVideo(e, i)} disabled={i === 0}><span className="oi oi-caret-top"/></button></td>

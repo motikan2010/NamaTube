@@ -81,7 +81,12 @@ class VideoRailsController < ApplicationController
   end
 
   def update
-    
+    sort_info_array = params[:sort]
+    sort_info_array.each { |sort, video_id|
+      Video.where(:id => video_id, :user_id => session[:user_id]).update_all(sort: sort)
+    }
+
+    redirect_to edit_video_rail_path(params[:id]), notice: '更新が完了しました'
   end
 
   # 削除
