@@ -18,7 +18,7 @@
               <small class="mb-1 text-muted"><%= video_rail.created_at.strftime('%Y/%m/%d %H:%M') %></small>
               <div class="row">
                 <div class="col-md-2">
-                  <button href="#" class="btn btn-success" disabled="disabled">編集</button>
+                  <%= link_to '編集', edit_video_rail_path(video_rail), class: 'btn btn-success' %>
                 </div>
                 <div class="col-md-2">
                   <%= link_to '削除', video_rail, method: :delete, data: { confirm: '削除しますか？' }, class: 'btn btn-danger' %>

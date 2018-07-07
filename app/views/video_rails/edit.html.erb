@@ -1,6 +1,14 @@
 <div class="container">
+  <div id="video-rail-id" data-id="<%= @id %>"></div>
   <div class="col-md-8 offset-md-2 py-5">
-    <div id="edit-video-list"></div>
+    <form action="/videos/<%= @id %>" method="post">
+      <div id="edit-video-list"></div>
+      <div class="text-center">
+        <input class="btn btn-success" type="submit" value="送信"/>
+        <input name="_method" type="hidden" value="put"/>
+        <%= hidden_field_tag 'authenticity_token', form_authenticity_token %>
+      </div>
+    </form>
   </div>
 </div>
 

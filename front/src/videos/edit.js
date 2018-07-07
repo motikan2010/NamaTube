@@ -3,8 +3,11 @@ import ReactDom from 'react-dom';
 
 class EditVideo extends React.Component {
 
+  videoRailId;
+
   constructor() {
     super();
+    this.videoRailId = document.getElementById('video-rail-id').getAttribute('data-id');
     this.state = {
       videoList: []
     };
@@ -15,7 +18,7 @@ class EditVideo extends React.Component {
   }
 
   componentWillMount() {
-    fetch('/api/videos/2', { credentials : 'include' }).then(response => {
+    fetch('/api/videos/' + this.videoRailId, { credentials : 'include' }).then(response => {
       console.log(response.status);
       return response.json();
     }).then(json => {
@@ -54,10 +57,11 @@ class EditVideo extends React.Component {
     let videos = this.state.videoList.map((video, i) => {
       return (
           <tr key={i}>
+            <td><input type="hidden" name="sort[]" value={i + ':' + video.id}/></td>
             <td><img className="rounded edit-video-thumbnail" src={video.thumbnail}/></td>
             <td>{video.title}</td>
-            <td><button className="btn btn-outline-secondary" onClick={(e) => this.upVideo(e, i)}><span className="oi oi-caret-top"/></button></td>
-            <td><button className="btn btn-outline-secondary" onClick={(e) => this.downVideo(e, i)}><span className="oi oi-caret-bottom"/></button></td>
+            <td className="align-middle"><button type="button" className="btn btn-outline-secondary" onClick={(e) => this.upVideo(e, i)} disabled={i === 0}><span className="oi oi-caret-top"/></button></td>
+            <td className="align-middle"><button type="button" className="btn btn-outline-secondary" onClick={(e) => this.downVideo(e, i)} disabled={this.state.videoList.length - 1 === i}><span className="oi oi-caret-bottom"/></button></td>
           </tr>
       )
     });

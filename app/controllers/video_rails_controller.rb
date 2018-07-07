@@ -2,14 +2,15 @@ class VideoRailsController < ApplicationController
 
   include Service::VideoService
 
-  before_action :authenticate, only: [:new, :create, :update, :destroy]
+  before_action :authenticate, only: [:new, :create, :edit, :update, :destroy]
+  before_action -> { redirect_to root_path unless is_own_video_rail?(params[:id]) }, only: [:edit, :update]
 
   def index
     if params[:t] || params[:k]
       videos = search_video(params)
       rail_id_list =  videos.map{|v| v.video_rail_id}
       p rail_id_list
-      @video_rails = VideoRail.where(:id => rail_id_list)
+      @video_rails = VideoRail.where(:id => rail_id_list).sort
     else
       @video_rails = VideoRail.all
     end
@@ -20,7 +21,7 @@ class VideoRailsController < ApplicationController
   end
 
   def show
-    @videos = Video.where(:video_rail_id => params[:id])
+    @videos = Video.where(:video_rail_id => params[:id]).order(:sort)
     @messages = Message.where(:video_rail_id => params[:id])
   end
 
@@ -49,7 +50,6 @@ class VideoRailsController < ApplicationController
       end
     }
 
-
     respond_to do |format|
       if errors.size == 0
         format.html { render action: 'confirm' }
@@ -77,11 +77,11 @@ class VideoRailsController < ApplicationController
   end
 
   def edit
-
+    @id = params[:id]
   end
 
   def update
-
+    
   end
 
   # 削除

@@ -82,7 +82,7 @@ class App extends React.Component {
             </div>
             <div className="col-md-6">
               <div className="text-right">
-                <button type="submit" className="btn btn-primary">Confirm</button>
+                <button type="submit" className="btn btn-primary">確認</button>
               </div>
             </div>
           </div>
