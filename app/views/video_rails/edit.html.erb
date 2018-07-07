@@ -1,6 +1,11 @@
 <div class="container">
   <div id="video-rail-id" data-id="<%= @id %>"></div>
   <div class="col-md-8 offset-md-2 py-5">
+    <% if flash[:notice] %>
+        <div class="alert alert-success">
+          <%= flash[:notice] %>
+        </div>
+    <% end %>
     <form action="/videos/<%= @id %>" method="post">
       <div id="edit-video-list"></div>
       <div class="text-center">
