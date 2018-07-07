@@ -48,16 +48,16 @@ module Service::VideoService
       video_minutes = (video_duration =~ /([0-9]+)M/) ? video_duration.match(/([0-9]+)M/)[1].to_i : 0
       video_second = (video_duration =~ /([0-9]+)S$/) ? video_duration.match(/([0-9]+)S$/)[1].to_i : 0
 
-      @video = Video.create
-      @video.user_id = session[:user_id]
-      @video.video_rail_id = @video_rail.id
-      @video.youtube_id = video_id
-      @video.title = titles[i]
-      @video.thumbnail = video_thumbnail_url
-      puts (video_hour * 3600 + video_minutes * 60 + video_second)
-      @video.play_time = (video_hour * 3600 + video_minutes * 60 + video_second)
+      video = Video.create
+      video.user_id = session[:user_id]
+      video.video_rail_id = @video_rail.id
+      video.sort = i
+      video.youtube_id = video_id
+      video.title = titles[i]
+      video.thumbnail = video_thumbnail_url
+      video.play_time = (video_hour * 3600 + video_minutes * 60 + video_second)
 
-      unless @video.save
+      unless video.save
         # 登録の失敗
         false
       end
@@ -82,11 +82,21 @@ module Service::VideoService
         }
       }
 
-      @video.tags = tags
-      @video.save
+      video.tags = tags
+      video.save
     }
 
     true
+  end
+
+  # ユーザのビデオレールであるか
+  def is_own_video_rail?(video_rail_id)
+    p video_rail_id
+    if VideoRail.where(:id => video_rail_id, :user_id => session[:user_id]).size > 0
+      true
+    else
+      false
+    end
   end
 
 end

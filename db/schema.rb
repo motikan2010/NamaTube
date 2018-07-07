@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 20180623164621) do
   create_table "videos", force: :cascade do |t|
     t.integer "user_id"
     t.integer "video_rail_id"
+    t.integer "sort"
     t.string "youtube_id"
     t.text "title"
     t.string "thumbnail"
