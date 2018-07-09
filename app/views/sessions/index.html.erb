@@ -1,11 +1,15 @@
 <div class="container">
-  <form class="form-signin py-5">
-    <% if @alert %>
-        <div class="alert alert-danger" role="alert">
-          <%= @alert %>
-        </div>
-    <% end %>
-    <%= link_to 'Twitterでログイン', 'auth/twitter', class: 'btn btn-lg btn-primary btn-block' %>
-    <%= link_to 'GitHubでログイン', '/auth/github', class: 'btn btn-lg btn-primary btn-block' %>
-  </form>
+  <div class="col-lg-12">
+    <form class="form-signin py-5">
+      <% if @alert %>
+          <div class="alert alert-danger" role="alert">
+            <%= @alert %>
+          </div>
+      <% end %>
+      <div class="col-md-12 col-lg-4 offset-lg-4">
+        <%= link_to 'Twitterでログイン', 'auth/twitter', class: 'btn btn-lg btn-primary btn-block' %>
+        <%= link_to 'GitHubでログイン', '/auth/github', class: 'btn btn-lg btn-primary btn-block' %>
+      </div>
+    </form>
+  </div>
 </div>
