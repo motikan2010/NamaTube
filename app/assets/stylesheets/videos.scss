@@ -23,10 +23,6 @@
 }
 
 // メッセージエリア
-.message-div {
-  margin-left: 0 !important;
-  padding-left: 0 !important;
-}
 .scrollbar-ripe::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
   background-color: #F5F5F5;
@@ -45,11 +41,6 @@
 
 .thin::-webkit-scrollbar {
   width: 6px;
-}
-
-.video-div {
-  margin-right: 0 !important;
-  padding-right: 0 !important;
 }
 
 .message-div > div {
