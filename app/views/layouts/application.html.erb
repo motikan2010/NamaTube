@@ -6,30 +6,32 @@
   <meta name="keywords" content="生つべ,動画,コメント">
   <meta name="description" content="「生つべ」はYouTubeの動画の再生位置を共有し、チャットを楽しむ動画コミュニティサイトです。">
   <%= csrf_meta_tags %>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
 <header>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top bg-dark">
     <div class="container">
-      <a class="navbar-brand" href="/">生つべ</a>
+      <%= link_to '生つべ', root_path, {:class => 'navbar-brand'} %>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="/videos">動画<span class="sr-only">(current)</span></a>
+            <%= link_to video_rails_path, {:class => 'nav-link'} do %>
+                動画<span class="sr-only">(current)</span>
+            <% end %>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/videos/new">登録</a>
+            <%= link_to '登録', new_video_rail_path, {:class => 'nav-link'} %>
           </li>
         </ul>
       </div>
       <div class="collapse navbar-collapse justify-content-md-center">
         <!-- 検索フォーム -->
-        <form class="form-inline mt-2 mt-md-0" action="/videos">
+        <form class="form-inline mt-2 mt-md-0" action="<%= video_rails_path %>">
           <input class="form-control mr-md-2" type="text" placeholder="Search" aria-label="Search" name="k" value="<%= @search_word %>">
           <button class="btn btn-success my-2 my-sm-0" type="submit"><span class="oi oi-magnifying-glass"></span></button>
         </form>
@@ -40,13 +42,13 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%= current_user.nickname %></a>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="<%= mypage_videos_path %>">マイページ</a>
-                  <a class="dropdown-item" href="/logout">ログアウト</a>
+                  <%= link_to 'マイページ', mypage_videos_path, {:class => 'dropdown-item'} %>
+                  <%= link_to 'ログアウト', logout_path, {:class => 'dropdown-item'} %>
                 </div>
               </li>
             </ul>
         <% else %>
-            <a class="btn btn-sm btn-outline-info" href="/login">ログイン</a>
+            <%= link_to 'ログイン', login_path, {:class => 'btn btn-sm btn-outline-info'} %>
         <% end %>
       </div>
     </div>

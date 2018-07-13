@@ -9,14 +9,12 @@ class VideoRailsController < ApplicationController
     if params[:t] || params[:k]
       videos = search_video(params)
       rail_id_list =  videos.map{|v| v.video_rail_id}
-      p rail_id_list
-      @video_rails = VideoRail.where(:id => rail_id_list).sort
+      @video_rails = VideoRail.where(:id => rail_id_list).order({ id: :desc })
     else
-      @video_rails = VideoRail.all
+      @video_rails = VideoRail.all.order({ id: :desc })
     end
 
     @video_list_info = get_first_video @video_rails
-
     @search_word = params[:k]
   end
 
