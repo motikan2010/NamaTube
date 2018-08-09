@@ -4,8 +4,8 @@ worker_processes Integer(ENV["WEB_CONCURRENCY"] || 3)
 timeout 15
 preload_app true  # 更新時ダウンタイム無し
 
-listen '/tmp/namatube.sock'
-pid '/tmp/namatube.pid'
+listen '/var/sockets/namatube.sock'
+pid '/var/sockets/namatube.pid'
 
 before_fork do |server, worker|
   Signal.trap 'TERM' do
