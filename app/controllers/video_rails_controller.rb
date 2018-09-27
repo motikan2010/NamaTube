@@ -2,16 +2,19 @@ class VideoRailsController < ApplicationController
 
   include Service::VideoService
 
+  # ログインユーザのみアクセス可能
   before_action :authenticate, only: [:new, :create, :edit, :update, :destroy]
+
+  # 登録者以外はトップにリダイレクト
   before_action -> { redirect_to root_path unless is_own_video_rail?(params[:id]) }, only: [:edit, :update]
 
   def index
     if params[:t] || params[:k]
       videos = search_video(params)
       rail_id_list =  videos.map{|v| v.video_rail_id}
-      @video_rails = VideoRail.where(:id => rail_id_list).order({ id: :desc })
+      @video_rails = VideoRail.where(:id => rail_id_list, :deleted_at => nil).order({ id: :desc })
     else
-      @video_rails = VideoRail.all.order({ id: :desc })
+      @video_rails = VideoRail.where(:deleted_at => nil).order({ id: :desc })
     end
 
     @video_list_info = get_first_video @video_rails
