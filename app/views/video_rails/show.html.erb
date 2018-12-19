@@ -28,15 +28,41 @@
         <div id="video"></div>
       </div>
     </div>
+
     <!-- コメント表示 エリア -->
     <div class="col-md-12 col-lg-3 py-md-3 py-lg-0 message-div">
-      <div class="card scrollbar-ripe">
-        <div id="messages" class="card-body" data-room_id="<%= @videos.first.video_rail_id %>">
-          <%= render @messages %>
+      <!-- タブナビ -->
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a href="#tab1" class="nav-link active" data-toggle="tab">チャット</a>
+        </li>
+        <li class="nav-item">
+          <a href="#tab2" class="nav-link" data-toggle="tab">リスト</a>
+        </li>
+      </ul>
+
+      <!-- タブコンテンツ -->
+      <div class="tab-content card">
+        <!-- チャット -->
+        <div id="tab1" class="tab-pane scrollbar-ripe active">
+          <div id="messages" class="card-body" data-room_id="<%= @videos.first.video_rail_id %>">
+            <%= render @messages %>
+          </div>
+        </div>
+
+        <!-- 動画リスト -->
+        <div id="tab2" class="tab-pane card scrollbar-ripe">
+          <% @videos.each do |video| %>
+              <div class="card img-thumbnail">
+                <img class="card-img-top" src="<%= video.thumbnail %>">
+                <p class="card-text"><small><%= video.title %></small></p>
+              </div>
+          <% end %>
         </div>
       </div>
     </div>
   </div>
+
   <!-- コメント入力 エリア -->
   <div class="row">
     <div class="col-md-12 col-lg-7 offset-lg-1 py-2">

@@ -26,12 +26,13 @@ class VideoRailsController < ApplicationController
     @messages = Message.where(:video_rail_id => params[:id])
   end
 
+  # 動画レールの作成ページ
   def new
 
   end
 
   def confirm
-    logger.info params[:video_url]
+    logger.info(params[:video_url])
 
     errors = []
     @video_infos = []
@@ -40,6 +41,7 @@ class VideoRailsController < ApplicationController
       if v_param != nil
       video_id = v_param.split('&')[0]
         info = get_video_info(video_id) # 動画の情報取得
+        logger.info(info)
         if info['items'].size == 0
           errors.push({:index => index, :msg => 'URLが正しくありません'})
         else
