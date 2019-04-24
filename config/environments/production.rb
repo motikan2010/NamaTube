@@ -45,7 +45,7 @@ Rails.application.configure do
   config.action_cable.allowed_request_origins = [ 'https://namatube.motikan2010.com' ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
+  config.force_ssl = false
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
@@ -88,4 +88,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # https://qiita.com/munaita_/items/e1d36fac9515654a76de
+  config.action_controller.forgery_protection_origin_check = false
 end
