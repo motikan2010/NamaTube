@@ -9,8 +9,12 @@
           </div>
       <% end %>
       <div class="col-md-12 col-lg-4 offset-lg-4">
-        <%= link_to 'Twitterでログイン', 'auth/twitter', class: 'btn btn-lg btn-primary btn-block' %>
-        <%= link_to 'GitHubでログイン', '/auth/github', class: 'btn btn-lg btn-primary btn-block' %>
+        <a class="btn btn-block btn-social btn-twitter" href="/auth/twitter">
+          <span class="fa fa-twitter"></span> Sign in with Twitter
+        </a>
+        <a class="btn btn-block btn-social btn-github" href="/auth/github">
+          <span class="fa fa-github"></span> Sign in with GitHub
+        </a>
       </div>
     </form>
   </div>
