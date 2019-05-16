@@ -4,8 +4,8 @@
       <% if i % 3 == 0 || i == 0 %>
       <div class="row card-deck">
       <% end %>
-        <div class="col-md-12 col-lg-4 py-md-3 py-lg-0 video-top-div">
-          <div class="card box-shadow">
+        <div class="video-top-div col-md-12 col-lg-4 py-md-3">
+          <div class="card box-shadow p-1">
             <%= link_to(video_rail, class: 'card-body video-card-body') do %>
                 <img class="card-img-top" src="<%= @video_list_info[video_rail.id][:thumbnail] %>">
                 <div class="d-none d-lg-block d-xl-block">

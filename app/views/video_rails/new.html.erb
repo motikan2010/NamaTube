@@ -2,14 +2,17 @@
 
 <div class="container">
   <div class="col-md-12 col-lg-6 offset-lg-3 py-5">
-    <% if @video_url_json != nil %>
-        <div id="video_url_list" data-json="<%= @video_url_json %>"></div>
-        <div id="video_error_list" data-json="<%= @errors_json %>"></div>
-    <% end %>
-    <form id="new-form" action="confirm" method="post">
-      <div id="new-url-input"></div>
-      <%= hidden_field_tag 'authenticity_token', form_authenticity_token %>
-    </form>
+    <div id="new-form-div" class="p-2 rounded">
+      <h3>動画の流れ 登録</h3>
+      <% if @video_url_json != nil %>
+          <div id="video_url_list" data-json="<%= @video_url_json %>"></div>
+          <div id="video_error_list" data-json="<%= @errors_json %>"></div>
+      <% end %>
+      <form id="new-form" action="confirm" method="post">
+        <div id="new-url-input"></div>
+        <%= hidden_field_tag 'authenticity_token', form_authenticity_token %>
+      </form>
+    </div>
   </div>
 </div>
 

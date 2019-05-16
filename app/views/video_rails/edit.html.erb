@@ -3,19 +3,22 @@
 <div class="container">
   <div id="video-rail-id" data-id="<%= @id %>"></div>
   <div class="col-md-8 offset-md-2 py-5">
-    <% if flash[:notice] %>
-        <div class="alert alert-success">
-          <%= flash[:notice] %>
+    <div id="edit-video-list-form" class="p-2 rounded">
+      <h3>動画の流れ 編集</h3>
+      <% if flash[:notice] %>
+          <div class="alert alert-success">
+            <%= flash[:notice] %>
+          </div>
+      <% end %>
+      <form action="/videos/<%= @id %>" method="post">
+        <div id="edit-video-list"></div>
+        <div class="text-center">
+          <input class="btn btn-success" type="submit" value="完了"/>
+          <input name="_method" type="hidden" value="put"/>
+          <%= hidden_field_tag 'authenticity_token', form_authenticity_token %>
         </div>
-    <% end %>
-    <form action="/videos/<%= @id %>" method="post">
-      <div id="edit-video-list"></div>
-      <div class="text-center">
-        <input class="btn btn-success" type="submit" value="送信"/>
-        <input name="_method" type="hidden" value="put"/>
-        <%= hidden_field_tag 'authenticity_token', form_authenticity_token %>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </div>
 
