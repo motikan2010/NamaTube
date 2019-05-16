@@ -19,6 +19,10 @@ html, body {
   font-family:"ヒラギノ角ゴ Pro W3", メイリオ, Osaka, Arial, Verdana, "ＭＳ Ｐゴシック", sans-serif !important;
 }
 
+body {
+  background: image-url('background.png');
+}
+
 a {
   text-decoration: none !important;
 }
