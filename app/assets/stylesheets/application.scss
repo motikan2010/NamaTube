@@ -15,8 +15,15 @@
  *= require_tree ../../../vendor/assets/.
  */
 
+@font-face {
+  font-family: 'GenEiGothicN-H-KL';
+  src: font-url('GenEiGothicN-H-KL.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 html, body {
-  font-family:"ヒラギノ角ゴ Pro W3", メイリオ, Osaka, Arial, Verdana, "ＭＳ Ｐゴシック", sans-serif !important;
+  font-family: 'GenEiGothicN-H-KL', 'ヒラギノ角ゴ Pro W3', メイリオ, Osaka, Arial, Verdana, 'ＭＳ Ｐゴシック', sans-serif !important;
 }
 
 body {
@@ -27,7 +34,9 @@ a {
   text-decoration: none !important;
 }
 
+#video-list-dev,
 #edit-video-list-form,
+#mypage-video-list,
 #new-form-div {
   background-color: #ffffff;
 }

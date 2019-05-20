@@ -2,7 +2,7 @@
   <div class="col-md-12 py-5">
     <% @video_rails.each_with_index do |video_rail, i| %>
       <% if i % 3 == 0 || i == 0 %>
-      <div class="row card-deck">
+        <div id="video-list-dev" class="row card-deck rounded">
       <% end %>
         <div class="video-top-div col-md-12 col-lg-4 py-md-3">
           <div class="card box-shadow p-1">
@@ -17,8 +17,8 @@
             <% end %>
           </div>
         </div>
-      <% if (i+1) % 3 == 0 || @video_rails.last == video_rail %>
-      </div>
+      <% if (i + 1) % 3 == 0 || @video_rails.last == video_rail %>
+        </div>
       <% end %>
     <% end %>
   </div>
